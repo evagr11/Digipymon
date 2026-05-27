@@ -84,7 +84,10 @@ def buscar_digipymon(jugador, inventario):
     #cumples los requisitos entonces se procede a la captura (teniendo en
     #cuenta el % de probabilidad). Tanto si aciertas como si fallas pierdes 1
     #digipyball.
-    if inventario.objetos.get("digipyball", 0) <= 0:
+    cantidad_digipyballs = 0
+    if "digipyball" in inventario.objetos:
+        cantidad_digipyballs = inventario.objetos["digipyball"]
+    if cantidad_digipyballs <= 0:
         escribir("No tienes digipyballs para capturar al Digipymon.")
         return
 
@@ -136,7 +139,9 @@ def combate(jugador):
     #entonces le quitas 1 digicoin.
     opcion = input("¿Quieres combatir contra el entrenador? (s/n): ").lower()
     if opcion != 's':
-        jugador.digicoins = max(0, jugador.digicoins - 1)
+        jugador.digicoins = jugador.digicoins - 1
+        if jugador.digicoins < 0:
+            jugador.digicoins = 0
         escribir(f"  Has huido... pierdes 1 digicoin. Tienes {jugador.digicoins} digicoins.")
         return
 
@@ -146,7 +151,10 @@ def combate(jugador):
     #El combate consiste en que tus digipymon y los del enemigo se
     #enfrentan. El primer digipymon de tu lista se enfrenta al primero
     #del enemigo y así sucesivamente.
-    for i in range(min(jugador.cantidad_digipymon, enemigo.cantidad_digipymon)):
+    cantidad_combates = jugador.cantidad_digipymon
+    if enemigo.cantidad_digipymon < cantidad_combates:
+        cantidad_combates = enemigo.cantidad_digipymon
+    for i in range(cantidad_combates):
         jugador_digipymon = jugador.lista_digipymon[i]
         enemigo_digipymon = enemigo.lista_digipymon[i]
 
@@ -161,8 +169,8 @@ def combate(jugador):
 
         # Estadisticas base antes de aplicar mejoras
         escribir(f" ESTADÍSTICAS BASE:")
-        escribir(f"   {jugador_digipymon.nombre}: Ataque base = {jugador_digipymon.ataque} | Nivel = {jugador_digipymon.nivel}")
-        escribir(f"   {enemigo_digipymon.nombre}: Ataque base = {enemigo_digipymon.ataque} | Nivel = {enemigo_digipymon.nivel}")
+        escribir(f"   {jugador_digipymon.nombre}: Ataque base = {jugador_digipymon.ataque} | Nivel = {jugador_digipymon.nivel} | Vida = {jugador_digipymon.vida}")
+        escribir(f"   {enemigo_digipymon.nombre}: Ataque base = {enemigo_digipymon.ataque} | Nivel = {enemigo_digipymon.nivel} | Vida = {enemigo_digipymon.vida}")
         time.sleep(0.3)
 
         # MEJORA 1: Calcular ataque efectivo con bonus de nivel para ambos
@@ -172,14 +180,20 @@ def combate(jugador):
         bonus_nivel_enemigo = enemigo_digipymon.nivel * 0.10
 
         # MEJORA 1: Mostrar mensaje de bonus por nivel
-        escribir(f" BONUS DE NIVEL (+{jugador_digipymon.nivel * 10}%):")
+        escribir(f" BONUS DE NIVEL ")
         escribir(f"   {jugador_digipymon.nombre}: {jugador_digipymon.ataque} + {bonus_nivel_jugador:.1f} = {ataque_jugador_nivel:.1f}")
         escribir(f"   {enemigo_digipymon.nombre}: {enemigo_digipymon.ataque} + {bonus_nivel_enemigo:.1f} = {ataque_enemigo_nivel:.1f}")
         time.sleep(0.3)
 
         # MEJORA 3: Calcular ataque con ventaja de tipo 
-        ataque_jugador, tipo_jugador, bonus_tipo_jugador = jugador_digipymon.ataque_con_tipo(enemigo_digipymon)
-        ataque_enemigo, tipo_enemigo, bonus_tipo_enemigo = enemigo_digipymon.ataque_con_tipo(jugador_digipymon)
+        resultado_jugador = jugador_digipymon.ataque_con_tipo(enemigo_digipymon)
+        resultado_enemigo = enemigo_digipymon.ataque_con_tipo(jugador_digipymon)
+        ataque_jugador = resultado_jugador[0]
+        tipo_jugador = resultado_jugador[1]
+        bonus_tipo_jugador = resultado_jugador[2]
+        ataque_enemigo = resultado_enemigo[0]
+        tipo_enemigo = resultado_enemigo[1]
+        bonus_tipo_enemigo = resultado_enemigo[2]
 
         # MEJORA 3: Mostrar mensaje de ventaja/desventaja de tipo
         if tipo_jugador == "ventaja":
@@ -221,17 +235,21 @@ def combate(jugador):
         elif ataque_jugador > ataque_enemigo:
             victorias += 1
             daño_recibido = int(ataque_enemigo)  # Se usa el ataque efectivo del enemigo como daño
-            jugador_digipymon.vida = max(0, jugador_digipymon.vida - daño_recibido)
+            jugador_digipymon.vida = jugador_digipymon.vida - daño_recibido
+            if jugador_digipymon.vida < 0:
+                jugador_digipymon.vida = 0
             escribir(f"¡Has ganado el combate! {jugador_digipymon.nombre} ha recibido {daño_recibido} de daño.")
             if jugador_digipymon.vida == 0:
-                escribir(f"{jugador_digipymon.nombre} ha sido debilitado.")
+                escribir(jugador_digipymon.nombre + " ha sido debilitado.")
         #Si tu digipymon tiene menos ataque, pierdes el combate y tu
         #digipymon pierde de vida la diferencia de ataque entre ambos
         #digipymons.
         elif ataque_jugador < ataque_enemigo:
             derrotas += 1
             daño_recibido = int(ataque_enemigo - ataque_jugador)
-            jugador_digipymon.vida = max(0, jugador_digipymon.vida - daño_recibido)
+            jugador_digipymon.vida = jugador_digipymon.vida - daño_recibido
+            if jugador_digipymon.vida < 0:
+                jugador_digipymon.vida = 0
             escribir(f"¡Has perdido el combate! {jugador_digipymon.nombre} ha recibido {daño_recibido} de daño.")
             if jugador_digipymon.vida == 0:
                 escribir(f"{jugador_digipymon.nombre} ha sido debilitado.")
@@ -251,7 +269,9 @@ def combate(jugador):
         jugador.digicoins += victorias
         escribir(f"\n¡Has ganado la batalla! Ganas {victorias} digicoins. Tienes {jugador.digicoins} digicoins.")
     elif derrotas > victorias:
-        jugador.digicoins = max(0, jugador.digicoins - derrotas)
+        jugador.digicoins = jugador.digicoins - derrotas
+        if jugador.digicoins < 0:
+            jugador.digicoins = 0
         escribir(f"\nHas perdido la batalla... pierdes {derrotas} digicoins. Tienes {jugador.digicoins} digicoins.")
     else:
         escribir("\nLa batalla ha terminado en empate. No ganas ni pierdes digicoins.")
@@ -268,6 +288,7 @@ def digishop(jugador, inventario):
         #b. Pocion: 3 digicoins (restaura 10p de vida)
         #c. Anabolizantes: 4 digicoins (aumenta 5p de ataque)
     escribir("\nBienvenido a la Digishop. Estos son los objetos disponibles:")
+    escribir(f"Tienes {jugador.digicoins} digicoins.")
     print("1. Digipyballs: 5 digicoins")
     print("2. Pocion: 3 digicoins (restaura 10p de vida)")
     print("3. Anabolizantes: 4 digicoins (aumenta 5p de ataque)")
@@ -448,8 +469,9 @@ def main():
         elif opcion == '5':
             separador()
             escribir("\nInventario:")
-            for item, cantidad in inventario.objetos.items():
-                escribir(f"{item}: {cantidad}")
+            for item in inventario.objetos:
+                cantidad = inventario.objetos[item]
+                escribir(item + ": " + str(cantidad))
         elif opcion == '6':
             separador()
             jugador.consultar_digipymon()
@@ -461,5 +483,4 @@ def main():
         else:
             escribir("Opción no válida. Por favor, elige una opción entre 1 y 7.")
  
-if __name__ == "__main__":
-    main()
+main()
