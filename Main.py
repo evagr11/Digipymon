@@ -150,10 +150,62 @@ def combate(jugador):
         jugador_digipymon = jugador.lista_digipymon[i]
         enemigo_digipymon = enemigo.lista_digipymon[i]
 
-        separador()
-        escribir(f"\nCombate {i + 1}: {jugador_digipymon} vs {enemigo_digipymon}")
-        time.sleep(0.4)
+        # MEJORA 1: Calcular ataque efectivo con bonus de nivel para ambos
+        # ataque_jugador = jugador_digipymon.ataque_efectivo()
+        # ataque_enemigo = enemigo_digipymon.ataque_efectivo()
 
+        separador()
+        escribir(f"  COMBATE {i + 1} ")
+        escribir(f"{jugador_digipymon.nombre} [{jugador_digipymon.tipo}]  VS  {enemigo_digipymon.nombre} [{enemigo_digipymon.tipo}]")
+        separador()
+
+        # Estadisticas base antes de aplicar mejoras
+        escribir(f" ESTADÍSTICAS BASE:")
+        escribir(f"   {jugador_digipymon.nombre}: Ataque base = {jugador_digipymon.ataque} | Nivel = {jugador_digipymon.nivel}")
+        escribir(f"   {enemigo_digipymon.nombre}: Ataque base = {enemigo_digipymon.ataque} | Nivel = {enemigo_digipymon.nivel}")
+        time.sleep(0.3)
+
+        # MEJORA 1: Calcular ataque efectivo con bonus de nivel para ambos
+        ataque_jugador_nivel = jugador_digipymon.ataque_efectivo()
+        ataque_enemigo_nivel = enemigo_digipymon.ataque_efectivo()
+        bonus_nivel_jugador = jugador_digipymon.nivel * 0.10
+        bonus_nivel_enemigo = enemigo_digipymon.nivel * 0.10
+
+        # MEJORA 1: Mostrar mensaje de bonus por nivel
+        escribir(f" BONUS DE NIVEL (+{jugador_digipymon.nivel * 10}%):")
+        escribir(f"   {jugador_digipymon.nombre}: {jugador_digipymon.ataque} + {bonus_nivel_jugador:.1f} = {ataque_jugador_nivel:.1f}")
+        escribir(f"   {enemigo_digipymon.nombre}: {enemigo_digipymon.ataque} + {bonus_nivel_enemigo:.1f} = {ataque_enemigo_nivel:.1f}")
+        time.sleep(0.3)
+
+        # MEJORA 3: Calcular ataque con ventaja de tipo 
+        ataque_jugador, tipo_jugador, bonus_tipo_jugador = jugador_digipymon.ataque_con_tipo(enemigo_digipymon)
+        ataque_enemigo, tipo_enemigo, bonus_tipo_enemigo = enemigo_digipymon.ataque_con_tipo(jugador_digipymon)
+
+        # MEJORA 3: Mostrar mensaje de ventaja/desventaja de tipo
+        if tipo_jugador == "ventaja":
+            escribir(f" ¡VENTAJA DE TIPO! {jugador_digipymon.tipo} es fuerte contra {enemigo_digipymon.tipo}")
+            escribir(f"   {jugador_digipymon.nombre}: {ataque_jugador_nivel:.1f} + {bonus_tipo_jugador:.1f} (30% de ataque base) = {ataque_jugador:.1f}")
+            escribir(f"   {enemigo_digipymon.nombre}: Sin ventaja = {ataque_enemigo:.1f}")
+        elif tipo_enemigo == "ventaja":
+            escribir(f" ¡VENTAJA DE TIPO PARA EL ENEMIGO! {enemigo_digipymon.tipo} es fuerte contra {jugador_digipymon.tipo}")
+            escribir(f"   {jugador_digipymon.nombre}: Sin ventaja = {ataque_jugador:.1f}")
+            escribir(f"   {enemigo_digipymon.nombre}: {ataque_enemigo_nivel:.1f} + {bonus_tipo_enemigo:.1f} (30% de ataque base) = {ataque_enemigo:.1f}")
+        else:
+            escribir(f"  Sin ventaja de tipo entre {jugador_digipymon.tipo} y {enemigo_digipymon.tipo}")
+            escribir(f"   {jugador_digipymon.nombre}: {ataque_jugador:.1f}")
+            escribir(f"   {enemigo_digipymon.nombre}: {ataque_enemigo:.1f}")
+
+        time.sleep(0.3)
+
+        # Resumen final de ataques antes de resultados del combate
+        separador()
+        escribir(f" RESUMEN FINAL:")
+        escribir(f"   {jugador_digipymon.nombre}: ATAQUE TOTAL = {ataque_jugador:.1f}")
+        escribir(f"   {enemigo_digipymon.nombre}: ATAQUE TOTAL = {ataque_enemigo:.1f}")
+        separador()
+        time.sleep(0.5)
+
+        
         #Si la vida de tu digipymon cae a 0 en un combate, indícalo. Si entras en
         #combate con tu digipymon con 0 de vida, pierdes el combate aunque
         #tu digipymon tenga más ataque. Si la vida del digipymon cae por
@@ -165,9 +217,10 @@ def combate(jugador):
         #Se compara los ataques de ambos digipymon, si el tuyo tiene
         #más ataque ganas el combate, pero tu digipymon pierde de vida
         #el ataque del digipymon enemigo.
-        elif jugador_digipymon.ataque > enemigo_digipymon.ataque:
+        # MEJORA 1: Se usa ataque_efectivo() en lugar de ataque base
+        elif ataque_jugador > ataque_enemigo:
             victorias += 1
-            daño_recibido = enemigo_digipymon.ataque
+            daño_recibido = int(ataque_enemigo)  # Se usa el ataque efectivo del enemigo como daño
             jugador_digipymon.vida = max(0, jugador_digipymon.vida - daño_recibido)
             escribir(f"¡Has ganado el combate! {jugador_digipymon.nombre} ha recibido {daño_recibido} de daño.")
             if jugador_digipymon.vida == 0:
@@ -175,9 +228,9 @@ def combate(jugador):
         #Si tu digipymon tiene menos ataque, pierdes el combate y tu
         #digipymon pierde de vida la diferencia de ataque entre ambos
         #digipymons.
-        elif jugador_digipymon.ataque < enemigo_digipymon.ataque:
+        elif ataque_jugador < ataque_enemigo:
             derrotas += 1
-            daño_recibido = enemigo_digipymon.ataque - jugador_digipymon.ataque
+            daño_recibido = int(ataque_enemigo - ataque_jugador)
             jugador_digipymon.vida = max(0, jugador_digipymon.vida - daño_recibido)
             escribir(f"¡Has perdido el combate! {jugador_digipymon.nombre} ha recibido {daño_recibido} de daño.")
             if jugador_digipymon.vida == 0:
@@ -218,13 +271,15 @@ def digishop(jugador, inventario):
     print("1. Digipyballs: 5 digicoins")
     print("2. Pocion: 3 digicoins (restaura 10p de vida)")
     print("3. Anabolizantes: 4 digicoins (aumenta 5p de ataque)")
-    print("4. Salir de la tienda")
+    # MEJORA 2: Añadir nuevo ítem para subir nivel
+    print("4. Subir Nivel: 6 digicoins (sube 1 nivel al Digipymon)")
+    print("5. Salir de la tienda")
 
     #Crea todo lo necesario para comprar ítems, comprobando que tienes
     #digicoins para ello, añadiendo el inventario y restando digicoins
     #gastados.
     while True:
-        opcion = input("¿Qué objeto quieres comprar? (1-4): ")
+        opcion = input("¿Qué objeto quieres comprar? (1-5): ")
         if opcion == '1':
             if jugador.digicoins >= 5:
                 inventario.añadir_objeto("digipyball", 1)
@@ -247,10 +302,18 @@ def digishop(jugador, inventario):
             else:
                 escribir("No tienes suficientes digicoins para comprar anabolizantes.")
         elif opcion == '4':
+            # MEJORA 1: Ítem para subir nivel
+            if jugador.digicoins >= 6:
+                inventario.añadir_objeto("subir_nivel", 1)
+                jugador.digicoins -= 6
+                escribir(f"Has comprado un ítem de Subir Nivel. Tienes {jugador.digicoins} digicoins.")
+            else:
+                escribir("No tienes suficientes digicoins para comprar un ítem de Subir Nivel.")
+        elif opcion == '5':
             escribir("Saliendo de la tienda...")
             break
         else:
-            escribir("Opción no válida. Por favor, elige una opción entre 1 y 4.")
+            escribir("Opción no válida. Por favor, elige una opción entre 1 y 5.")
 
 #Recibe por parámetro un jugador y un inventario
 def usar_item(jugador, inventario):
@@ -266,34 +329,82 @@ def usar_item(jugador, inventario):
     if not inventario.objetos:
         escribir("No tienes objetos en tu inventario.")
         return
-    escribir("\nTu inventario:")
-    for item, cantidad in inventario.objetos.items():
-        escribir(f"{item}: {cantidad}")
-    item_elegido = input("¿Qué objeto quieres usar? ").lower()
-    if item_elegido not in inventario.objetos:
-        escribir("No tienes ese objeto en tu inventario.")
-        return
-    if item_elegido == "digipyball":
-        escribir("Las digipyballs no se pueden usar directamente, ¡son para capturar Digipymons!")
-        return
-    if jugador.cantidad_digipymon == 0:
-        escribir("No tienes Digipymons para usar el objeto.")
-        return
-    escribir("\nTus Digipymons:")
-    for idx, digipymon in enumerate(jugador.lista_digipymon):
-        escribir(f"{idx + 1}. {digipymon}")
-    digipymon_elegido = int(input("¿A qué Digipymon quieres usar el objeto? ")) - 1
-    if digipymon_elegido < 0 or digipymon_elegido >= jugador.cantidad_digipymon:
-        escribir("Número de Digipymon no válido.")
-        return
-    digipymon = jugador.lista_digipymon[digipymon_elegido]
-    if item_elegido == "pocion":
-        digipymon.vida += 10
-        escribir(f"Has usado una pocion en {digipymon.nombre}. Su vida ahora es {digipymon.vida}.")
-    elif item_elegido == "anabolizantes":
-        digipymon.ataque += 5
-        escribir(f"Has usado anabolizantes en {digipymon.nombre}. Su ataque ahora es {digipymon.ataque}.")
-    inventario.usar_objeto(item_elegido)
+
+    while True:
+        # Crear lista de todos los objetos del inventario para el menú numérico
+        objetos_lista = []
+        escribir("\nObjetos disponibles:")
+        for item, cantidad in inventario.objetos.items():
+            objetos_lista.append(item)
+            print(f"{len(objetos_lista)}. {item.capitalize()}: {cantidad}")
+        
+        # Opción de salir
+        print(f"{len(objetos_lista) + 1}. Salir")
+
+        opcion_item = input("\n¿Qué objeto quieres usar? (número): ")
+
+        if opcion_item == str(len(objetos_lista) + 1):
+            escribir("Saliendo del menú de objetos...")
+            break
+
+        if opcion_item < '1' or opcion_item > str(len(objetos_lista) + 1):
+            escribir("Opción no válida. Por favor, elige una opción válida.")
+            continue
+
+        item_elegido = objetos_lista[int(opcion_item) - 1]
+
+        # Verificar si el objeto elegido es digipyball
+        if item_elegido == "digipyball":
+            escribir("Las digipyballs no se pueden usar directamente, ¡son para capturar Digipymons!")
+            continue
+
+        if jugador.cantidad_digipymon == 0:
+            escribir("No tienes Digipymons para usar el objeto.")
+            return
+
+        escribir("\nTus Digipymons:")
+        for index, digipymon in enumerate(jugador.lista_digipymon):
+            print(f"{index + 1}. {digipymon}")
+
+        digipymon_elegido = input("¿A qué Digipymon quieres usar el objeto? (número): ")
+
+        if digipymon_elegido < '1' or digipymon_elegido > str(jugador.cantidad_digipymon):
+            escribir("Número de Digipymon no válido.")
+            continue
+
+        digipymon = jugador.lista_digipymon[int(digipymon_elegido) - 1]
+
+        if item_elegido == "pocion":
+            digipymon.vida += 10
+            escribir(f"Has usado una pocion en {digipymon.nombre}. Su vida ahora es {digipymon.vida}.")
+        elif item_elegido == "anabolizantes":
+            digipymon.ataque += 5
+            escribir(f"Has usado anabolizantes en {digipymon.nombre}. Su ataque ahora es {digipymon.ataque}.")
+        elif item_elegido == "subir_nivel":
+            # MEJORA 1: Funcionalidad para subir nivel
+            digipymon.nivel += 1
+            escribir(f"¡{digipymon.nombre} ha subido de nivel! Ahora es nivel {digipymon.nivel}.")
+            # MEJORA 2: Verificar si evoluciona (nivel 5)
+            if digipymon.nivel >= 5:
+                separador()
+                escribir(" ¡¡¡EVOLUCIÓN!!! ", velocidad=0.05)
+                time.sleep(0.5)
+                nombre_anterior = digipymon.evolucionar()
+                escribir(f"¡{nombre_anterior} ha evolucionado a {digipymon.nombre}!")
+                escribir(f"Vida aumentada en 15 puntos. Vida actual: {digipymon.vida}")
+                escribir(f"Ataque base aumentado en 5 puntos. Ataque actual: {digipymon.ataque}")
+                escribir(f"¡{digipymon.nombre} es ahora mucho más poderoso!")
+                separador()
+            else:
+                ataque_bonus = digipymon.ataque_efectivo()
+                escribir(f"Su ataque efectivo ahora es {ataque_bonus:.1f} (bonus del nivel aplicado).")
+                
+                # MEJORA 2: Mostrar progreso hacia evolución
+                niveles_restantes = 5 - digipymon.nivel
+                if niveles_restantes > 0:
+                    escribir(f"Faltan {niveles_restantes} niveles para evolucionar.")
+
+        inventario.usar_objeto(item_elegido)
 
 #Muestra una introducción del videojuego y pregunta por el nombre del
 #jugador. Crea entonces un objeto de la clase Jugador.
