@@ -1,11 +1,13 @@
 import random
 class ListaNombres:
+    """Listas de nombres para los Digipymon y los entrenadores rivales."""
     #Constructor por defecto. Tiene un atributo llamado
     #“lista_nombres_digipymons” el cual se inicializa con una lista con al
     #menos 20 nombres que decidas poner. También otro atributo llamado
     #“lista_nombres_entrenadores” inicializado a una lista con otros 20
     #nombres que te inventes.
     def __init__(self):
+        """Crea las dos listas, de 20 nombres cada una."""
         self.lista_nombres_digipymons = [
             "Betamon", "Dorimon", "Gaomon", "Gomamon", "Gotsumon", 
             "Guilmon", "Greymon", "Tokomon", "Salomon", "Lopmon", 
@@ -24,10 +26,16 @@ class ListaNombres:
     #de la lista de nombres de digipymons, devuelves con un return dicho
     #nombre. Consultar anexo
     def obtener_nombre_digipymon(self):
+        """Returns:
+            Un nombre de Digipymon elegido al azar.
+        """
         return random.choice(self.lista_nombres_digipymons)
     
     #Método “obtener_nombre_entrenador”. Exactamente igual que el
     #método anterior pero con la lista de nombres de entrenadores.
     #Consultar anexo
     def obtener_nombre_entrenador(self):
+        """Returns:
+            Un nombre de entrenador elegido al azar.
+        """
         return random.choice(self.lista_nombres_entrenadores)

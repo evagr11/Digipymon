@@ -10,6 +10,12 @@ lista_nombres = ListaNombres()
 
 # Función para imprimir texto letra a letra
 def escribir(texto, velocidad=0.03):
+    """Imprime un texto letra a letra, como en los juegos clásicos.
+
+    Args:
+        texto: texto que se imprime.
+        velocidad: segundos de espera entre letras.
+    """
     for letra in texto:
         print(letra, end='', flush=True)
         time.sleep(velocidad)
@@ -17,6 +23,7 @@ def escribir(texto, velocidad=0.03):
 
 # Función para imprimir un separador decorativo
 def separador():
+    """Imprime una línea decorativa."""
     escribir("─" * 50, velocidad=0.01)
 
 #Para generar un digipymon aleatorio, debes generar de forma aleatoria
@@ -28,6 +35,12 @@ def separador():
 #d. El tipo entre "fuego, agua y planta"
 #e. Un nombre aleatorio llamando al método "obtener_nombre_digipymon()" de la clase ListaNombres
 def generar_digipymon_aleatorio():
+    """Crea un Digipymon con valores al azar: vida de 10 a 20, ataque de 1 a 10,
+    nivel de 1 a 3, tipo y nombre aleatorios.
+
+    Returns:
+        El Digipymon creado.
+    """
     vida = random.randint(10, 20)
     ataque = random.randint(1, 10)
     nivel = random.randint(1, 3)
@@ -49,6 +62,11 @@ def generar_digipymon_aleatorio():
 #7. Salir
 #Pregunta al usuario por la opción que prefiere y haz un return de dicha opción.
 def menu():
+    """Muestra el menú principal y pide una opción.
+
+    Returns:
+        La opción escrita, como texto.
+    """
     separador()
     escribir("          MENÚ PRINCIPAL:")
     separador()
@@ -66,6 +84,15 @@ def menu():
 
 #Esta función recibe por parámetro el jugador y el inventario
 def buscar_digipymon(jugador, inventario):
+    """Aparece un Digipymon salvaje y se puede intentar capturar con una digipyball.
+
+    La probabilidad de captura es 100 - nivel * 10. Hace falta tener digipyballs
+    y menos de 6 Digipymon, y la digipyball se gasta aunque falle.
+
+    Args:
+        jugador: el jugador.
+        inventario: el inventario del jugador.
+    """
     separador()
     escribir("  *** BÚSQUEDA DE DIGIPYMON ***")
     separador()
@@ -118,6 +145,14 @@ def buscar_digipymon(jugador, inventario):
 
 #Recibe por parámetro un jugador
 def combate(jugador):
+    """Combate contra un entrenador con tantos Digipymon como el jugador.
+
+    Se enfrentan por orden, con el bonus de nivel y la ventaja de tipo. Huir
+    cuesta 1 digicoin, y los digicoins nunca bajan de 0.
+
+    Args:
+        jugador: el jugador.
+    """
     separador()
     escribir("  *** COMBATE ***")
     separador()
@@ -279,6 +314,12 @@ def combate(jugador):
 
 #Recibe por parámetro el jugador y el inventario.
 def digishop(jugador, inventario):
+    """Tienda de digipyballs, pociones y anabolizantes que se pagan con digicoins.
+
+    Args:
+        jugador: el jugador.
+        inventario: el inventario del jugador.
+    """
     separador()
     escribir("  *** DIGISHOP ***")
     separador()
@@ -338,6 +379,14 @@ def digishop(jugador, inventario):
 
 #Recibe por parámetro un jugador y un inventario
 def usar_item(jugador, inventario):
+    """Usa una poción (más vida) o un anabolizante (más ataque) en un Digipymon.
+
+    Las digipyballs no se pueden usar aquí.
+
+    Args:
+        jugador: el jugador.
+        inventario: el inventario del jugador.
+    """
     separador()
     escribir("  *** USAR OBJETO ***")
     separador()
@@ -430,6 +479,7 @@ def usar_item(jugador, inventario):
 #Muestra una introducción del videojuego y pregunta por el nombre del
 #jugador. Crea entonces un objeto de la clase Jugador.
 def main():
+    """Introducción del juego, Digipymon y objetos iniciales, y bucle del menú principal."""
     separador()
     escribir("       *** BIENVENIDO A DIGIPYMON ***", velocidad=0.05)
     separador()
@@ -483,4 +533,5 @@ def main():
         else:
             escribir("Opción no válida. Por favor, elige una opción entre 1 y 7.")
  
-main()
+if __name__ == "__main__":
+    main()

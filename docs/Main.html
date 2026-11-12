@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module Main</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title">Main</strong></td>
+<td class="extra"><a href="index.html">índice</a><br><a href="https://github.com/evagr11/Digipymon/blob/main/Main.py">Main.py</a></td></tr></table>
+    <p></p>
+<p>
+<table class="section">
+<tr class="decor pkg-content-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
+    
+<tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="https://docs.python.org/3/library/random.html">random</a><br>
+</td><td class="multicolumn"><a href="https://docs.python.org/3/library/time.html">time</a><br>
+</td><td class="multicolumn"></td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor functions-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Functions</strong></td></tr>
+    
+<tr><td class="decor functions-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt><a name="-buscar_digipymon"><strong>buscar_digipymon</strong></a>(jugador, inventario)</dt><dd><span class="code">Aparece&nbsp;un&nbsp;Digipymon&nbsp;salvaje&nbsp;y&nbsp;se&nbsp;puede&nbsp;intentar&nbsp;capturar&nbsp;con&nbsp;una&nbsp;digipyball.<br>
+&nbsp;<br>
+La&nbsp;probabilidad&nbsp;de&nbsp;captura&nbsp;es&nbsp;100&nbsp;-&nbsp;nivel&nbsp;*&nbsp;10.&nbsp;Hace&nbsp;falta&nbsp;tener&nbsp;digipyballs<br>
+y&nbsp;menos&nbsp;de&nbsp;6&nbsp;Digipymon,&nbsp;y&nbsp;la&nbsp;digipyball&nbsp;se&nbsp;gasta&nbsp;aunque&nbsp;falle.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;jugador:&nbsp;el&nbsp;jugador.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inventario:&nbsp;el&nbsp;inventario&nbsp;del&nbsp;jugador.</span></dd></dl>
+ <dl><dt><a name="-combate"><strong>combate</strong></a>(jugador)</dt><dd><span class="code">Combate&nbsp;contra&nbsp;un&nbsp;entrenador&nbsp;con&nbsp;tantos&nbsp;Digipymon&nbsp;como&nbsp;el&nbsp;jugador.<br>
+&nbsp;<br>
+Se&nbsp;enfrentan&nbsp;por&nbsp;orden,&nbsp;con&nbsp;el&nbsp;bonus&nbsp;de&nbsp;nivel&nbsp;y&nbsp;la&nbsp;ventaja&nbsp;de&nbsp;tipo.&nbsp;Huir<br>
+cuesta&nbsp;1&nbsp;digicoin,&nbsp;y&nbsp;los&nbsp;digicoins&nbsp;nunca&nbsp;bajan&nbsp;de&nbsp;0.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;jugador:&nbsp;el&nbsp;jugador.</span></dd></dl>
+ <dl><dt><a name="-digishop"><strong>digishop</strong></a>(jugador, inventario)</dt><dd><span class="code">Tienda&nbsp;de&nbsp;digipyballs,&nbsp;pociones&nbsp;y&nbsp;anabolizantes&nbsp;que&nbsp;se&nbsp;pagan&nbsp;con&nbsp;digicoins.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;jugador:&nbsp;el&nbsp;jugador.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inventario:&nbsp;el&nbsp;inventario&nbsp;del&nbsp;jugador.</span></dd></dl>
+ <dl><dt><a name="-escribir"><strong>escribir</strong></a>(texto, velocidad=0.03)</dt><dd><span class="code">Imprime&nbsp;un&nbsp;texto&nbsp;letra&nbsp;a&nbsp;letra,&nbsp;como&nbsp;en&nbsp;los&nbsp;juegos&nbsp;clásicos.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;texto:&nbsp;texto&nbsp;que&nbsp;se&nbsp;imprime.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;velocidad:&nbsp;segundos&nbsp;de&nbsp;espera&nbsp;entre&nbsp;letras.</span></dd></dl>
+ <dl><dt><a name="-generar_digipymon_aleatorio"><strong>generar_digipymon_aleatorio</strong></a>()</dt><dd><span class="code">Crea&nbsp;un&nbsp;Digipymon&nbsp;con&nbsp;valores&nbsp;al&nbsp;azar:&nbsp;vida&nbsp;de&nbsp;10&nbsp;a&nbsp;20,&nbsp;ataque&nbsp;de&nbsp;1&nbsp;a&nbsp;10,<br>
+nivel&nbsp;de&nbsp;1&nbsp;a&nbsp;3,&nbsp;tipo&nbsp;y&nbsp;nombre&nbsp;aleatorios.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;El&nbsp;Digipymon&nbsp;creado.</span></dd></dl>
+ <dl><dt><a name="-main"><strong>main</strong></a>()</dt><dd><span class="code">Introducción&nbsp;del&nbsp;juego,&nbsp;Digipymon&nbsp;y&nbsp;objetos&nbsp;iniciales,&nbsp;y&nbsp;bucle&nbsp;del&nbsp;menú&nbsp;principal.</span></dd></dl>
+ <dl><dt><a name="-menu"><strong>menu</strong></a>()</dt><dd><span class="code">Muestra&nbsp;el&nbsp;menú&nbsp;principal&nbsp;y&nbsp;pide&nbsp;una&nbsp;opción.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;La&nbsp;opción&nbsp;escrita,&nbsp;como&nbsp;texto.</span></dd></dl>
+ <dl><dt><a name="-separador"><strong>separador</strong></a>()</dt><dd><span class="code">Imprime&nbsp;una&nbsp;línea&nbsp;decorativa.</span></dd></dl>
+ <dl><dt><a name="-usar_item"><strong>usar_item</strong></a>(jugador, inventario)</dt><dd><span class="code">Usa&nbsp;una&nbsp;poción&nbsp;(más&nbsp;vida)&nbsp;o&nbsp;un&nbsp;anabolizante&nbsp;(más&nbsp;ataque)&nbsp;en&nbsp;un&nbsp;Digipymon.<br>
+&nbsp;<br>
+Las&nbsp;digipyballs&nbsp;no&nbsp;se&nbsp;pueden&nbsp;usar&nbsp;aquí.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;jugador:&nbsp;el&nbsp;jugador.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inventario:&nbsp;el&nbsp;inventario&nbsp;del&nbsp;jugador.</span></dd></dl>
+</td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>lista_nombres</strong> = &lt;ListaNombres.ListaNombres object&gt;</td></tr></table>
+</body></html>

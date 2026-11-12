@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module Digipymon</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title">Digipymon</strong></td>
+<td class="extra"><a href="index.html">índice</a><br><a href="https://github.com/evagr11/Digipymon/blob/main/Digipymon.py">Digipymon.py</a></td></tr></table>
+    <p></p>
+<p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="Digipymon.html#Digipymon">Digipymon</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Digipymon">class <strong>Digipymon</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Digipymon">Digipymon</a>(nombre,&nbsp;vida,&nbsp;ataque,&nbsp;tipo,&nbsp;nivel)<br>
+&nbsp;<br>
+Criatura&nbsp;del&nbsp;juego&nbsp;con&nbsp;nombre,&nbsp;vida,&nbsp;ataque,&nbsp;tipo&nbsp;y&nbsp;nivel.<br>
+&nbsp;<br>
+Los&nbsp;tipos&nbsp;son&nbsp;fuego,&nbsp;agua&nbsp;y&nbsp;planta,&nbsp;y&nbsp;cada&nbsp;uno&nbsp;tiene&nbsp;ventaja&nbsp;sobre&nbsp;otro<br>
+(fuego&nbsp;&gt;&nbsp;planta&nbsp;&gt;&nbsp;agua&nbsp;&gt;&nbsp;fuego).<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="Digipymon-__init__"><strong>__init__</strong></a>(self, nombre, vida, ataque, tipo, nivel)</dt><dd><span class="code">Crea&nbsp;un&nbsp;<a href="#Digipymon">Digipymon</a>.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nombre:&nbsp;nombre&nbsp;del&nbsp;<a href="#Digipymon">Digipymon</a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vida:&nbsp;puntos&nbsp;de&nbsp;vida.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ataque:&nbsp;puntos&nbsp;de&nbsp;ataque&nbsp;base.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tipo:&nbsp;"fuego",&nbsp;"agua"&nbsp;o&nbsp;"planta".<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nivel:&nbsp;nivel,&nbsp;del&nbsp;1&nbsp;en&nbsp;adelante.</span></dd></dl>
+
+<dl><dt><a name="Digipymon-__str__"><strong>__str__</strong></a>(self)</dt><dd><span class="code">Devuelve&nbsp;todos&nbsp;los&nbsp;atributos&nbsp;en&nbsp;una&nbsp;línea,&nbsp;para&nbsp;imprimirlo.</span></dd></dl>
+
+<dl><dt><a name="Digipymon-ataque_con_tipo"><strong>ataque_con_tipo</strong></a>(self, enemigo_digipymon)</dt><dd><span class="code">Calcula&nbsp;el&nbsp;ataque&nbsp;contra&nbsp;otro&nbsp;<a href="#Digipymon">Digipymon</a>&nbsp;teniendo&nbsp;en&nbsp;cuenta&nbsp;el&nbsp;tipo.<br>
+&nbsp;<br>
+Si&nbsp;tiene&nbsp;ventaja&nbsp;de&nbsp;tipo,&nbsp;suma&nbsp;un&nbsp;30&nbsp;%&nbsp;del&nbsp;ataque&nbsp;base&nbsp;al&nbsp;ataque&nbsp;efectivo.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;enemigo_digipymon:&nbsp;<a href="#Digipymon">Digipymon</a>&nbsp;al&nbsp;que&nbsp;ataca.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Una&nbsp;tupla&nbsp;(ataque,&nbsp;"ventaja"&nbsp;o&nbsp;"normal",&nbsp;bonus&nbsp;de&nbsp;tipo&nbsp;aplicado).</span></dd></dl>
+
+<dl><dt><a name="Digipymon-ataque_efectivo"><strong>ataque_efectivo</strong></a>(self)</dt><dd><span class="code">Devuelve&nbsp;el&nbsp;ataque&nbsp;con&nbsp;el&nbsp;bonus&nbsp;de&nbsp;nivel.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;El&nbsp;ataque&nbsp;base&nbsp;más&nbsp;nivel&nbsp;*&nbsp;0.10.</span></dd></dl>
+
+<dl><dt><a name="Digipymon-evolucionar"><strong>evolucionar</strong></a>(self)</dt><dd><span class="code">Evoluciona&nbsp;el&nbsp;<a href="#Digipymon">Digipymon</a>:&nbsp;añade&nbsp;"Mega"&nbsp;al&nbsp;nombre,&nbsp;+15&nbsp;de&nbsp;vida&nbsp;y&nbsp;+5&nbsp;de&nbsp;ataque.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;El&nbsp;nombre&nbsp;que&nbsp;tenía&nbsp;antes&nbsp;de&nbsp;evolucionar.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>
