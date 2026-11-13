@@ -5,6 +5,7 @@
 <div align="center">
   <a href="https://github.com/evagr11/Digipymon" target="_blank"><img src="https://img.shields.io/badge/Ver_Código-0A0E27?style=for-the-badge&logo=github&logoColor=white" alt="Ver Código"></a>
   <a href="https://evagr11.github.io/Digipymon/" target="_blank"><img src="https://img.shields.io/badge/Documentación_(pydoc)-7B2FF7?style=for-the-badge&logo=python&logoColor=white" alt="Documentación pydoc"></a>
+  <a href="docs/Documentacion_Digipymon.pdf" target="_blank"><img src="https://img.shields.io/badge/Documentación-0A0E27?style=for-the-badge&logo=latex&logoColor=white" alt="Documentación"></a>
   <a href="#cómo-utilizar-el-proyecto"><img src="https://img.shields.io/badge/Cómo_Jugar-00D4AA?style=for-the-badge&logo=python&logoColor=white" alt="Cómo Jugar"></a>
 </div>
 
